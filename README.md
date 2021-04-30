@@ -12,7 +12,7 @@ Check https://en.wikipedia.org/wiki/Snake_(video_game_genre).
 
 ## Road Map:
 
-Pointsystem
-Difficulties
-Highscore list
+Pointsystem //
+Difficulties //
+Highscore list //
 "Game Over" - Screen
