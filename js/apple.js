@@ -6,13 +6,14 @@ class Apple {
         this.height = h;
     }
 
-    teleport(x, y) {
+    moveApple(x, y) {
         this.x = x;
         this.y = y;
     }
 
     drawApple() {
         fill(255, 0, 0);
-        rect(this.x * this.width, this.y * this.height, this.width, this.height);
+        const r = Math.min(this.width, this.height);
+        circle(this.x * this.width + r / 2, this.y * this.height + r / 2, r);
     }
 }

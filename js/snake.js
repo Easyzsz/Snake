@@ -16,9 +16,10 @@ class Snake {
         const nextStepX = this.head.x + sx;
         const nextStepY = this.head.y + sy;
 
-        if (nextStepX < 0 || nextStepX >= canvasW / width ||
-            nextStepY < 0 || nextStepY >= canvasH / height ||
+        if (nextStepX < 0 || nextStepX >= canvasW / this.width ||
+            nextStepY < 0 || nextStepY >= canvasH / this.height ||
             this.wasTooHungry(nextStepX, nextStepY)) {
+            gameOver = true;
             noLoop();
             return;
         }
@@ -71,9 +72,46 @@ class Snake {
     eat(apple) {
         if (this.head.x == apple.x && this.head.y == apple.y) {
             this.growBody();
+            const oldScore = parseInt(score.html());
+            score.html(oldScore + 1);
+            //points.html(Math.exp(oldScore)); implement bonus points through time
             return true;
         }
 
         return false;
+    }
+
+    gameOver() {
+        const gWidth = 15;
+        const gHeight = 9;
+        const cordX = Math.floor((canvasW / this.width - gWidth) / 2);
+        const cordY = Math.floor((canvasH / this.height - gHeight) / 2);
+        let x = this.height;
+
+        const rows = [[cordX + 3, cordX + 7, cordX + 9, cordX + 11], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 11, cordX + 14], [cordX + 1, cordX + 3, cordX + 7, cordX + 9, cordX + 11, cordX + 13, cordX + 14], [cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 11], [cordX + 3, cordX + 5, cordX + 7, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 10, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 10, cordX + 11, cordX + 14], [cordX + 3, cordX + 4, cordX + 6, cordX + 7, cordX + 11, cordX + 13]];
+        //const row1 = [[cordX + 3, cordX + 7, cordX + 9, cordX + 11], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 11, cordX + 14], [cordX + 1, cordX + 3, cordX + 7, cordX + 9, cordX + 11, cordX + 13, cordX + 14], [cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 11]];
+        //const row2 = [[cordX + 3, cordX + 5, cordX + 7, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 10, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 10, cordX + 11, cordX + 14], [cordX + 3, cordX + 4, cordX + 6, cordX + 7, cordX + 11, cordX + 13]];
+
+        fill(0, 0, 0);
+        for (let j = cordY; j <= cordY + gHeight; j++) {
+            for (let i = cordX; i < cordX + gWidth; i++) {
+                if (rows[j - cordY].includes(i) == false) {
+
+                    rect(i * this.width, j > cordY + 3 ? (j + 1) * this.height : j * this.height, this.width, this.height);
+                }
+
+                /* if (j < cordY + 4) {
+                    if (row1[j - cordY].includes(i) == false) {
+                        rect(i * this.width, j * this.height, this.width, this.height);
+
+                    }
+                }
+                if (j > cordY + 4) {
+                    if (row2[j - (cordY + 5)].includes(i) == false) {
+                        rect(i * this.width, j * this.height, this.width, this.height);
+                    }
+                } */
+            }
+        }
     }
 }
