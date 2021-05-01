@@ -3,6 +3,7 @@ const canvasH = 800;
 const width = 20;
 const height = 20;
 
+let gen;
 let gameSpeed = 10;
 let snake;
 let apple;
@@ -20,6 +21,7 @@ function setup() {
     snake = new Snake(width, height);
     apple = new Apple(0, 0, width, height);
     spawnApple();
+    gen = snake.genOver();
 
     frameRate(gameSpeed);
 
@@ -80,22 +82,27 @@ function keyPush(event) {
 }
 
 function draw() {
-    clear();
-    fill(0, 102, 102);
-    stroke(25, 51, 0);
-    strokeWeight(10);
-    rect(0, 0, canvasW, canvasH);
 
-    snake.move(sx, sy);
-    hasMoved = false;
+    if (gameOver == false) {
+        clear();
+        fill(0, 102, 102);
+        stroke(25, 51, 0);
+        strokeWeight(10);
+        rect(0, 0, canvasW, canvasH);
 
-    isAppleGone = snake.eat(apple);
+        snake.move(sx, sy);
+        hasMoved = false;
 
-    snake.drawSnake();
-    apple.drawApple();
+        isAppleGone = snake.eat(apple);
+
+        snake.drawSnake();
+        apple.drawApple();
+    }
 
     if (gameOver) {
-        snake.gameOver();
+        //snake.gameOver();
+        //snake.gameOverBig();
+        gen.next();
     }
 
     if (isAppleGone) {

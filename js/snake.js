@@ -1,6 +1,6 @@
 const startX = 30;
 const startY = 30;
-const bodySize = 10;
+const bodySize = 5;
 
 class Snake {
     constructor(width, height) {
@@ -20,7 +20,7 @@ class Snake {
             nextStepY < 0 || nextStepY >= canvasH / this.height ||
             this.wasTooHungry(nextStepX, nextStepY)) {
             gameOver = true;
-            noLoop();
+            //noLoop();
             return;
         }
 
@@ -81,12 +81,11 @@ class Snake {
         return false;
     }
 
-    gameOver() {
+    /*gameOver() {
         const gWidth = 15;
         const gHeight = 9;
         const cordX = Math.floor((canvasW / this.width - gWidth) / 2);
         const cordY = Math.floor((canvasH / this.height - gHeight) / 2);
-        let x = this.height;
 
         const rows = [[cordX + 3, cordX + 7, cordX + 9, cordX + 11], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 11, cordX + 14], [cordX + 1, cordX + 3, cordX + 7, cordX + 9, cordX + 11, cordX + 13, cordX + 14], [cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 11], [cordX + 3, cordX + 5, cordX + 7, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 10, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 10, cordX + 11, cordX + 14], [cordX + 3, cordX + 4, cordX + 6, cordX + 7, cordX + 11, cordX + 13]];
         //const row1 = [[cordX + 3, cordX + 7, cordX + 9, cordX + 11], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 11, cordX + 14], [cordX + 1, cordX + 3, cordX + 7, cordX + 9, cordX + 11, cordX + 13, cordX + 14], [cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 11]];
@@ -110,8 +109,58 @@ class Snake {
                     if (row2[j - (cordY + 5)].includes(i) == false) {
                         rect(i * this.width, j * this.height, this.width, this.height);
                     }
-                } */
+                }
             }
         }
+    }*/
+
+    /*gameOverBig() {
+        const gWidth = 20;
+        const gHeight = 11;
+        const cordX = Math.floor((canvasW / this.width - gWidth) / 2);
+        const cordY = Math.floor((canvasH / this.height - gHeight) / 2);
+
+        const rows = [[cordX + 4, cordX + 5, cordX + 8, cordX + 9, cordX + 11, cordX + 12, cordX + 13, cordX + 15], [cordX + 1, cordX + 2, cordX + 3, cordX + 4, cordX + 6, cordX + 7, cordX + 9, cordX + 12, cordX + 15, cordX + 17, cordX + 18, cordX + 19], [cordX + 1, cordX + 4, cordX + 9, cordX + 11, cordX + 13, cordX + 15, cordX + 19], [cordX + 1, cordX + 2, cordX + 4, cordX + 6, cordX + 7, cordX + 9, cordX + 11, cordX + 12, cordX + 13, cordX + 15, cordX + 17, cordX + 18, cordX + 19], [cordX + 4, cordX + 6, cordX + 7, cordX + 9, cordX + 11, cordX + 12, cordX + 13, cordX + 15], [cordX, cordX + 4, cordX + 5, cordX + 7, cordX + 8, cordX + 10, cordX + 15], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 8, cordX + 10, cordX + 12, cordX + 13, cordX + 14, cordX + 15, cordX + 17, cordX + 18], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 8, cordX + 10, cordX + 14, cordX + 15], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 8, cordX + 10, cordX + 12, cordX + 13, cordX + 14, cordX + 15, cordX + 17, cordX + 19], [cordX, cordX + 4, cordX + 5, cordX + 6, cordX + 9, cordX + 10, cordX + 15, cordX + 17, cordX + 18]];
+        //const row1 = [[cordX + 3, cordX + 7, cordX + 9, cordX + 11], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 11, cordX + 14], [cordX + 1, cordX + 3, cordX + 7, cordX + 9, cordX + 11, cordX + 13, cordX + 14], [cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 11]];
+        //const row2 = [[cordX + 3, cordX + 5, cordX + 7, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 10, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 10, cordX + 11, cordX + 14], [cordX + 3, cordX + 4, cordX + 6, cordX + 7, cordX + 11, cordX + 13]];
+
+        fill(0, 0, 0);
+        for (let j = cordY; j <= cordY + gHeight; j++) {
+            for (let i = cordX; i < cordX + gWidth; i++) {
+                if (rows[j - cordY].includes(i) == false) {
+
+                    rect(i * this.width, j > cordY + 4 ? (j + 1) * this.height : j * this.height, this.width, this.height);
+                }
+            }
+        }
+    }*/
+
+    * genOver() {
+        const gHeight = 11;
+        const cordY = Math.floor((canvasH / this.height - gHeight) / 2);
+
+        for (let j = cordY; j < cordY + gHeight - 1; j++) {
+            yield this.drawGameOver(j);
+        }
+    }
+
+    drawGameOver(j) {
+        const gWidth = 20;
+        const gHeight = 11;
+        const cordX = Math.floor((canvasW / this.width - gWidth) / 2);
+        const cordY = Math.floor((canvasH / this.height - gHeight) / 2);
+
+        const rows = [[cordX + 4, cordX + 5, cordX + 8, cordX + 9, cordX + 11, cordX + 12, cordX + 13, cordX + 15], [cordX + 1, cordX + 2, cordX + 3, cordX + 4, cordX + 6, cordX + 7, cordX + 9, cordX + 12, cordX + 15, cordX + 17, cordX + 18, cordX + 19], [cordX + 1, cordX + 4, cordX + 9, cordX + 11, cordX + 13, cordX + 15, cordX + 19], [cordX + 1, cordX + 2, cordX + 4, cordX + 6, cordX + 7, cordX + 9, cordX + 11, cordX + 12, cordX + 13, cordX + 15, cordX + 17, cordX + 18, cordX + 19], [cordX + 4, cordX + 6, cordX + 7, cordX + 9, cordX + 11, cordX + 12, cordX + 13, cordX + 15], [cordX, cordX + 4, cordX + 5, cordX + 7, cordX + 8, cordX + 10, cordX + 15], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 8, cordX + 10, cordX + 12, cordX + 13, cordX + 14, cordX + 15, cordX + 17, cordX + 18], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 8, cordX + 10, cordX + 14, cordX + 15], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 8, cordX + 10, cordX + 12, cordX + 13, cordX + 14, cordX + 15, cordX + 17, cordX + 19], [cordX, cordX + 4, cordX + 5, cordX + 6, cordX + 9, cordX + 10, cordX + 15, cordX + 17, cordX + 18]];
+        //const row1 = [[cordX + 3, cordX + 7, cordX + 9, cordX + 11], [cordX + 1, cordX + 2, cordX + 3, cordX + 5, cordX + 7, cordX + 11, cordX + 14], [cordX + 1, cordX + 3, cordX + 7, cordX + 9, cordX + 11, cordX + 13, cordX + 14], [cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 11]];
+        //const row2 = [[cordX + 3, cordX + 5, cordX + 7, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 10, cordX + 11], [cordX + 1, cordX + 3, cordX + 5, cordX + 7, cordX + 9, cordX + 10, cordX + 11, cordX + 14], [cordX + 3, cordX + 4, cordX + 6, cordX + 7, cordX + 11, cordX + 13]];
+
+        fill(0, 0, 0);
+        for (let i = cordX; i < cordX + gWidth; i++) {
+            if (rows[j - cordY].includes(i) == false) {
+
+                rect(i * this.width, j > cordY + 4 ? (j + 1) * this.height : j * this.height, this.width, this.height);
+            }
+        }
+
     }
 }
